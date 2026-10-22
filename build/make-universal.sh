@@ -89,6 +89,8 @@ codesign "${sign_options[@]}" --entitlements "$entitlements" "$macos/filee-cli"
 codesign "${sign_options[@]}" --entitlements "$entitlements" "$macos/Filee"
 codesign "${sign_options[@]}" --entitlements "$entitlements" "$app"
 codesign --verify --deep --strict "$app"
+ln -s "$macos/filee-cli" "$stage/theodrop"
+"$stage/theodrop" --version >/dev/null
 
 temporary="$archive.$(uuidgen | tr -d -).partial"
 tar -czf "$temporary" -C "$stage" "$package_name"

@@ -31,10 +31,16 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    char resolved[PATH_MAX];
+    if (realpath(self, resolved) == NULL) {
+        fprintf(stderr, "TheoDrop: cannot resolve %s: %s\n", self, strerror(errno));
+        return 1;
+    }
+
     char directory[PATH_MAX];
     char name[PATH_MAX];
-    snprintf(directory, sizeof(directory), "%s", self);
-    snprintf(name, sizeof(name), "%s", self);
+    snprintf(directory, sizeof(directory), "%s", resolved);
+    snprintf(name, sizeof(name), "%s", resolved);
 
     char target[PATH_MAX];
     if (snprintf(target, sizeof(target), "%s/%s/%s", dirname(directory), THEODROP_SLICE, basename(name)) >= (int)sizeof(target)) {
