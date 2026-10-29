@@ -353,9 +353,9 @@ public class RenderTests
         {
             images.PresetIds.AddRange(["rotate", "flip"]);
             var vm = AppHost.Get<RadialViewModel>();
-            vm.Load([@"C:\photos\a.jpg"], clickMode: true);
+            vm.Load([@"C:\photos\a.jpg"], clickMode: true, Filee.Core.Settings.WheelMode.Tools);
             vm.FitToThisDonut();
-            var rotate = vm.Items.Count - 2;
+            var rotate = vm.Presets.ToList().FindIndex(p => p.Id == "rotate");
             Assert.Equal(3, vm.Items[rotate].Children!.Count);
             Assert.All(vm.Items[rotate].Children!, item => Assert.True(item.IsEnabled, item.Label));
             // Short names on the ring ("Rotate" → "Left"), the full one ("Rotate left") everywhere else.
@@ -468,7 +468,7 @@ public class RenderTests
         window.DonutControl.SetExternalHighlight(1);
         Pump();
 
-        Assert.Equal(10, vm.Items.Count); // with "Trace to SVG" and "Line art to SVG"
+        Assert.Equal(9, vm.Items.Count); // conversion targets only; resizing moved to the tools wheel
         Assert.Equal("JPG 3개", vm.CenterTitle);
         Save(window, "donut-images-ko.png");
         window.Close();

@@ -4,7 +4,7 @@
 
 <p align="center">
   <b>드래그로 쓰는 무료 오픈소스 파일 변환기.</b><br>
-  키(<kbd>Ctrl</kbd>, macOS는 <kbd>Option</kbd>)를 누른 채 파일을 끌면 커서 위치에 도넛이 열려요. 원하는 형식 위에 놓으면 끝.
+  macOS에서 <kbd>Shift</kbd>를 누른 채 파일을 끌면 변환 휠이, <kbd>Command</kbd>를 누르면 도구 휠이 열려요.
 </p>
 
 <p align="center">

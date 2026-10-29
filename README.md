@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>A free, open-source file converter you use by dragging.</b><br>
-  Hold a key (<kbd>Ctrl</kbd>, <kbd>Option</kbd> on macOS), drag files and drop them on a format in the donut that opens at your cursor.
+  Hold <kbd>Shift</kbd> on macOS and drag files to open the conversion wheel, or hold <kbd>Command</kbd> for file tools.
 </p>
 
 <p align="center">

@@ -46,6 +46,13 @@ public enum TriggerScope
     Anywhere,
 }
 
+/// <summary>Which set of commands the gesture opens.</summary>
+public enum WheelMode
+{
+    Convert,
+    Tools,
+}
+
 /// <summary>A user-configurable gesture that opens the donut toolbar.</summary>
 public sealed class TriggerGesture
 {
@@ -54,6 +61,7 @@ public sealed class TriggerGesture
     public TriggerKind Kind { get; set; } = TriggerKind.Drag;
     public ModifierKeys Modifiers { get; set; } = ModifierKeys.Ctrl;
     public TriggerMouseButton Button { get; set; } = TriggerMouseButton.Left;
+    public WheelMode Wheel { get; set; } = WheelMode.Convert;
 
     /// <summary>
     /// Extra non-modifier key (SharpHook <c>KeyCode</c> name without the "Vc" prefix, e.g. <c>"Space"</c>).
@@ -74,11 +82,13 @@ public sealed class TriggerGesture
     /// <summary>Default gestures for the current OS.</summary>
     public static List<TriggerGesture> Defaults()
     {
-        // On macOS Ctrl+click means right-click, and Option already means "copy" in Finder.
-        var dragModifier = OperatingSystem.IsMacOS() ? ModifierKeys.Alt : ModifierKeys.Ctrl;
+        // Separate conversion and tool wheels keep each ring focused and make both one gesture away.
+        var convertModifier = OperatingSystem.IsMacOS() ? ModifierKeys.Shift : ModifierKeys.Ctrl;
+        var toolsModifier = OperatingSystem.IsMacOS() ? ModifierKeys.Meta : ModifierKeys.Alt;
         return
         [
-            new() { Kind = TriggerKind.Drag, Modifiers = dragModifier, Button = TriggerMouseButton.Left },
+            new() { Kind = TriggerKind.Drag, Modifiers = convertModifier, Button = TriggerMouseButton.Left },
+            new() { Kind = TriggerKind.Drag, Modifiers = toolsModifier, Button = TriggerMouseButton.Left, Wheel = WheelMode.Tools },
             new() { Kind = TriggerKind.KeyChord, Modifiers = ModifierKeys.Ctrl | ModifierKeys.Alt, Button = TriggerMouseButton.None, Key = "Space" },
         ];
     }

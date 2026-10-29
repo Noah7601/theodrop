@@ -54,7 +54,7 @@
                 </Border>
               </DockPanel>
 
-              <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,14,Auto">
+              <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,14,Auto,14,Auto">
                 <StackPanel>
                   <TextBlock Classes="label" Text="{DynamicResource triggers.kind}" />
                   <ComboBox ItemsSource="{Binding Kinds}" SelectedItem="{Binding Kind}" HorizontalAlignment="Stretch" />
@@ -94,6 +94,11 @@
                       <Button Classes="ghost" Content="{DynamicResource triggers.clear}" Command="{Binding ClearKeyCommand}" />
                     </StackPanel>
                   </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="3">
+                  <TextBlock Classes="label" Text="{DynamicResource triggers.wheel}" />
+                  <ComboBox ItemsSource="{Binding Wheels}" SelectedItem="{Binding Wheel}" HorizontalAlignment="Stretch" />
                 </StackPanel>
               </Grid>
 

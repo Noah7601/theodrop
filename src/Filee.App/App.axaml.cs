@@ -53,7 +53,7 @@ public partial class App : Application
         var triggers = AppHost.Get<TriggerService>();
         var radial = AppHost.Get<RadialController>();
         var platform = AppHost.Get<IPlatformServices>();
-        triggers.DragStarted += (_, e) => radial.ShowForDrag(e.X, e.Y);
+        triggers.DragStarted += (_, e) => radial.ShowForDrag(e.X, e.Y, e.Gesture?.Wheel ?? WheelMode.Convert);
         triggers.DragEnded += (_, _) => radial.OnDragGestureEnded();
         triggers.SelectionGesture += async (_, e) =>
         {
@@ -65,7 +65,7 @@ public partial class App : Application
                 var files = OperatingSystem.IsMacOS()
                     ? await Task.Run(platform.GetFileManagerSelection) : platform.GetFileManagerSelection();
                 if (files.Count > 0 && !store.Settings.Paused)
-                    radial.ShowForFiles(e.X, e.Y, files);
+                    radial.ShowForFiles(e.X, e.Y, files, e.Gesture?.Wheel ?? WheelMode.Convert);
             }
             catch (Exception ex) when (ex is not OutOfMemoryException)
             {

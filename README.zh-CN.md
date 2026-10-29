@@ -4,7 +4,7 @@
 
 <p align="center">
   <b>用拖放操作的免费开源文件格式转换器。</b><br>
-  按住一个键（<kbd>Ctrl</kbd>，macOS 为 <kbd>Option</kbd>）拖动文件，光标处会弹出格式圆环，放到想要的格式上即可。
+  在 macOS 上按住 <kbd>Shift</kbd> 拖动文件可打开转换轮盘，按住 <kbd>Command</kbd> 可打开工具轮盘。
 </p>
 
 <p align="center">

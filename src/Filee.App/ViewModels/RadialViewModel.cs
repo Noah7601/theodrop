@@ -48,6 +48,7 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
 
     /// <summary>For each slice, the presets its group fans out (empty for an ordinary preset).</summary>
     private IReadOnlyList<IReadOnlyList<Preset>> _subPresets = [];
+    private WheelMode _wheel = WheelMode.Convert;
 
     /// <summary>
     /// The preset that slice <paramref name="index"/> converts with, or slice <paramref name="sub"/> of its group's ring;
@@ -76,8 +77,9 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
     public bool HasFiles => Files.Count > 0;
 
     /// <summary>Drag mode before any file entered: an empty ring saying "Bring files here".</summary>
-    public void ResetForDrag()
+    public void ResetForDrag(WheelMode wheel = WheelMode.Convert)
     {
+        _wheel = wheel;
         IsClickMode = false;
         Files = [];
         Presets = [];
@@ -92,8 +94,10 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
     }
 
     /// <summary>Fills the donut for the given files.</summary>
-    public void Load(IReadOnlyList<string> files, bool clickMode)
+    public void Load(IReadOnlyList<string> files, bool clickMode, WheelMode? wheel = null)
     {
+        if (wheel is not null)
+            _wheel = wheel.Value;
         IsClickMode = clickMode;
         Files = files;
         DonutOpacity = 1;
@@ -102,9 +106,14 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
 
         var profile = ProfileSelector.Select(store.Profiles, files);
         var formats = ProfileSelector.DetectFormats(files);
-        Presets = (profile?.PresetIds ?? [])
+        var toolIds = BuiltInData.ToolPresetIds.ToHashSet();
+        var presetIds = _wheel == WheelMode.Tools ? BuiltInData.ToolPresetIds : (profile?.PresetIds ?? []).Where(id => !toolIds.Contains(id));
+        Presets = presetIds
             .Select(store.FindPreset)
             .OfType<Preset>()
+            .Where(p => _wheel != WheelMode.Tools || (p.IsGroup
+                ? p.SubPresetIds.Select(store.FindPreset).OfType<Preset>().Any(c => availability.Check(c, formats) is null)
+                : availability.Check(p, formats) is null))
             .ToList();
 
         _subPresets = Presets

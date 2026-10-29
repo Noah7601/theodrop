@@ -34,6 +34,7 @@ public sealed partial class TriggerGestureViewModel : ObservableObject
         Scopes = Enum.GetValues<TriggerScope>()
             .Select(s => new Choice<TriggerScope>(s, loc[s == TriggerScope.FileManager ? $"triggers.scope.{s}{platform}" : $"triggers.scope.{s}"]))
             .ToList();
+        Wheels = Enum.GetValues<WheelMode>().Select(w => new Choice<WheelMode>(w, loc[$"triggers.wheel.{w}"])).ToList();
         RecordLabel = loc["triggers.record"];
         RecordingLabel = loc["triggers.recording"];
         SystemLabel = loc["triggers.threshold_system"];
@@ -49,6 +50,7 @@ public sealed partial class TriggerGestureViewModel : ObservableObject
         DragThreshold = gesture.DragThreshold;
         HoldMilliseconds = gesture.HoldMilliseconds;
         Scope = Scopes.First(s => s.Value == gesture.Scope);
+        Wheel = Wheels.First(w => w.Value == gesture.Wheel);
         _loading = false;
     }
 
@@ -56,6 +58,7 @@ public sealed partial class TriggerGestureViewModel : ObservableObject
     public IReadOnlyList<Choice<TriggerKind>> Kinds { get; }
     public IReadOnlyList<Choice<TriggerMouseButton>> Buttons { get; }
     public IReadOnlyList<Choice<TriggerScope>> Scopes { get; }
+    public IReadOnlyList<Choice<WheelMode>> Wheels { get; }
     public string RecordLabel { get; }
     public string RecordingLabel { get; }
     public string SystemLabel { get; }
@@ -75,6 +78,7 @@ public sealed partial class TriggerGestureViewModel : ObservableObject
     [ObservableProperty, NotifyPropertyChangedFor(nameof(ThresholdText))] private int _dragThreshold;
     [ObservableProperty] private int _holdMilliseconds;
     [ObservableProperty] private Choice<TriggerScope> _scope = null!;
+    [ObservableProperty] private Choice<WheelMode> _wheel = null!;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(KeyText))] private bool _isRecording;
 
     public bool UsesMouse => Kind.Value != TriggerKind.KeyChord;
@@ -101,6 +105,7 @@ public sealed partial class TriggerGestureViewModel : ObservableObject
         _gesture.DragThreshold = Math.Clamp(DragThreshold, 0, 200);
         _gesture.HoldMilliseconds = Math.Clamp(HoldMilliseconds, 150, 3000);
         _gesture.Scope = Scope.Value;
+        _gesture.Wheel = Wheel.Value;
         OnPropertyChanged(nameof(Summary));
         _save();
     }

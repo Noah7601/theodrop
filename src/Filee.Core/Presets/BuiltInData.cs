@@ -11,6 +11,13 @@ public static class BuiltInData
     /// <summary>Special target format meaning "same format as the source file" (e.g. resize only).</summary>
     public const string SameAsSource = "*";
 
+    /// <summary>Commands shown on the focused tools wheel, in display order.</summary>
+    public static readonly IReadOnlyList<string> ToolPresetIds =
+    [
+        "half-size", "grayscale", "remove-background", "rotate", "flip",
+        "pdf-long-image", "pdf-split", "merge-pdf", "zip-all", "extract",
+    ];
+
     /// <summary>Creates the default preset list.</summary>
     public static List<Preset> CreatePresets() =>
     [

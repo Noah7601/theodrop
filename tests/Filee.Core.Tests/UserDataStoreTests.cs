@@ -153,6 +153,21 @@ public class UserDataStoreTests
     }
 
     [Fact]
+    public void Version_17_keeps_existing_shortcuts_and_adds_one_tools_wheel()
+    {
+        using var dir = new TempDir();
+        File.WriteAllText(Path.Combine(dir.Path, "settings.json"),
+            """{ "schemaVersion": 17, "triggers": [{ "id": "mine", "kind": "Drag", "modifiers": "Alt", "button": "Left" }] }""");
+
+        var store = new UserDataStore(dir.Path);
+        store.Load();
+
+        Assert.Equal(2, store.Settings.Triggers.Count);
+        Assert.Contains(store.Settings.Triggers, t => t.Id == "mine" && t.Modifiers == ModifierKeys.Alt && t.Wheel == WheelMode.Convert);
+        Assert.Single(store.Settings.Triggers, t => t.Wheel == WheelMode.Tools);
+    }
+
+    [Fact]
     public void Version_3_libraries_get_the_text_profile_once()
     {
         using var dir = new TempDir();

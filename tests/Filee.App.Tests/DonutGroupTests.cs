@@ -428,6 +428,22 @@ public class DonutGroupTests
     }
 
     [AvaloniaFact]
+    public void Conversion_and_tools_wheels_offer_separate_commands()
+    {
+        TestServices.EnsureInitialized("en");
+        var vm = AppHost.Get<RadialViewModel>();
+
+        vm.Load([@"C:\photos\a.jpg"], clickMode: true, WheelMode.Convert);
+        Assert.Contains(vm.Presets, p => p.Id == "to-png");
+        Assert.DoesNotContain(vm.Presets, p => BuiltInData.ToolPresetIds.Contains(p.Id));
+
+        vm.Load([@"C:\photos\a.jpg"], clickMode: true, WheelMode.Tools);
+        Assert.Contains(vm.Presets, p => p.Id == "rotate");
+        Assert.Contains(vm.Presets, p => p.Id == "half-size");
+        Assert.DoesNotContain(vm.Presets, p => p.Id == "to-png");
+    }
+
+    [AvaloniaFact]
     public void A_group_left_without_presets_says_why_on_the_donut()
     {
         TestServices.EnsureInitialized("en");

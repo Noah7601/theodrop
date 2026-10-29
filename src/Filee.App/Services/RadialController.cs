@@ -62,14 +62,14 @@ public sealed class RadialController(
     /// invisible until files are dragged into it (FilesEntered); a gesture without files (text, a rubber-band
     /// selection, nothing at all) never shows anything and closes when the button is released.
     /// </summary>
-    public void ShowForDrag(int x, int y)
+    public void ShowForDrag(int x, int y, WheelMode wheel = WheelMode.Convert)
     {
         ReleaseProgressToToast();
         var window = EnsureWindow();
         // A ring from an earlier conversion (finished or handed to the toast) must not keep this gesture's window up.
         window.DonutControl.LeaveProgressMode();
         _dropped = false;
-        viewModel.ResetForDrag();
+        viewModel.ResetForDrag(wheel);
         window.DonutControl.AllowContextEdit = false;
         PlaceAndShow(window, x, y, activate: false);
 
@@ -82,14 +82,14 @@ public sealed class RadialController(
     }
 
     /// <summary>Opens the donut for known files (click mode).</summary>
-    public void ShowForFiles(int x, int y, IReadOnlyList<string> files)
+    public void ShowForFiles(int x, int y, IReadOnlyList<string> files, WheelMode wheel = WheelMode.Convert)
     {
         if (files.Count == 0)
             return;
         ReleaseProgressToToast();
         var window = EnsureWindow();
         _dropped = false;
-        viewModel.Load(files, clickMode: true);
+        viewModel.Load(files, clickMode: true, wheel);
         viewModel.FitToThisDonut();
         window.DonutControl.AllowContextEdit = true;
         PlaceAndShow(window, x, y, activate: true);

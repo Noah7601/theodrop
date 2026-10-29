@@ -295,6 +295,20 @@ internal static class SettingsMigrations
         if (settings.Triggers.Count == 0)
             settings.Triggers = TriggerGesture.Defaults();
 
+        // v18: a second, independently configurable gesture opens a focused tools wheel. Existing shortcuts stay
+        // untouched; only the missing role is added so an upgrade never steals a user's chosen combination.
+        if (settings.SchemaVersion < 18 && settings.Triggers.Count > 0 &&
+            !settings.Triggers.Any(t => t.Wheel == WheelMode.Tools))
+        {
+            settings.Triggers.Add(new TriggerGesture
+            {
+                Kind = TriggerKind.Drag,
+                Modifiers = OperatingSystem.IsMacOS() ? ModifierKeys.Meta : ModifierKeys.Alt,
+                Button = TriggerMouseButton.Left,
+                Wheel = WheelMode.Tools,
+            });
+        }
+
         settings.SchemaVersion = AppSettings.CurrentSchemaVersion;
     }
 

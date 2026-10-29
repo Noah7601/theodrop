@@ -13,6 +13,21 @@ one-line summaries in the user's language (`ko`, `en`, `zh`; a line per change, 
 - `recommended`: bug fixes. The card shows once per version.
 - `optional`: new features only. No card, the sidebar button only.
 
+## 1.12.0
+
+<!-- update
+level: optional
+ko: 변환 휠과 도구 휠을 서로 다른 드래그 단축키로 바로 열 수 있어요
+ko: 단축키 설정에서 각 제스처가 열 휠을 선택할 수 있어요
+en: Open separate conversion and tools wheels with different drag shortcuts
+en: Choose which wheel each gesture opens in Shortcut settings
+zh: 使用不同的拖动快捷键分别打开转换轮盘和工具轮盘
+zh: 可在快捷键设置中选择每个手势打开的轮盘
+-->
+
+- macOS 신규 설치는 Shift+드래그로 변환 휠, Command+드래그로 도구 휠을 엽니다. 기존 변환 단축키는 유지됩니다.
+- 도구 휠은 현재 파일에 적용 가능한 크기 조절, 흑백, 배경 제거, 회전·반전, PDF·압축 도구만 보여 줍니다.
+
 ## 1.11.0
 
 <!-- update
