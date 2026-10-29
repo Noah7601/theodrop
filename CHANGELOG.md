@@ -13,6 +13,17 @@ one-line summaries in the user's language (`ko`, `en`, `zh`; a line per change, 
 - `recommended`: bug fixes. The card shows once per version.
 - `optional`: new features only. No card, the sidebar button only.
 
+## 1.13.0
+
+<!-- update
+level: optional
+ko: Command+Control을 누른 채 파일을 끌어 AirDrop으로 바로 보낼 수 있어요
+en: Hold Command+Control while dragging files to send them with AirDrop
+zh: 按住 Command+Control 拖动文件即可通过隔空投送发送
+-->
+
+- macOS 동작 휠에 AirDrop을 추가했습니다. Command+Control을 누른 채 파일을 끌고 AirDrop에 놓으면 시스템 AirDrop 창이 열립니다.
+
 ## 1.12.0
 
 <!-- update

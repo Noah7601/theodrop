@@ -162,9 +162,12 @@ public class UserDataStoreTests
         var store = new UserDataStore(dir.Path);
         store.Load();
 
-        Assert.Equal(2, store.Settings.Triggers.Count);
+        Assert.Equal(OperatingSystem.IsMacOS() ? 3 : 2, store.Settings.Triggers.Count);
         Assert.Contains(store.Settings.Triggers, t => t.Id == "mine" && t.Modifiers == ModifierKeys.Alt && t.Wheel == WheelMode.Convert);
         Assert.Single(store.Settings.Triggers, t => t.Wheel == WheelMode.Tools);
+        if (OperatingSystem.IsMacOS())
+            Assert.Single(store.Settings.Triggers, t => t.Wheel == WheelMode.Actions &&
+                t.Modifiers == (ModifierKeys.Ctrl | ModifierKeys.Meta));
     }
 
     [Fact]

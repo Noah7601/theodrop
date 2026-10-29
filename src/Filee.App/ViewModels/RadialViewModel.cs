@@ -13,6 +13,7 @@ namespace Filee.App.ViewModels;
 
 public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc, PresetAvailability availability) : ObservableObject
 {
+    public const string AirDropAction = "airdrop";
     [ObservableProperty] private IReadOnlyList<DonutItem> _items = [];
     [ObservableProperty] private string _centerTitle = "";
     [ObservableProperty] private string? _centerSubtitle;
@@ -49,6 +50,7 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
     /// <summary>For each slice, the presets its group fans out (empty for an ordinary preset).</summary>
     private IReadOnlyList<IReadOnlyList<Preset>> _subPresets = [];
     private WheelMode _wheel = WheelMode.Convert;
+    public WheelMode Wheel => _wheel;
 
     /// <summary>
     /// The preset that slice <paramref name="index"/> converts with, or slice <paramref name="sub"/> of its group's ring;
@@ -56,7 +58,7 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
     /// </summary>
     public Preset? PresetAt(int index, int sub)
     {
-        if (index < 0 || index >= Items.Count)
+        if (_wheel == WheelMode.Actions || index < 0 || index >= Items.Count)
             return null;
         if (sub < 0)
             return Items[index] is { IsEnabled: true, IsGroup: false } ? Presets[index] : null;
@@ -64,6 +66,9 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
             ? _subPresets[index][sub]
             : null;
     }
+
+    public string? ActionAt(int index, int sub) =>
+        _wheel == WheelMode.Actions && sub < 0 && index == 0 ? AirDropAction : null;
 
     /// <summary>The preset slice <paramref name="index"/> shows, or slice <paramref name="sub"/> of its group's ring (to edit it).</summary>
     public Preset? PresetShownAt(int index, int sub) =>
@@ -94,10 +99,9 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
     }
 
     /// <summary>Fills the donut for the given files.</summary>
-    public void Load(IReadOnlyList<string> files, bool clickMode, WheelMode? wheel = null)
+    public void Load(IReadOnlyList<string> files, bool clickMode, WheelMode wheel = WheelMode.Convert)
     {
-        if (wheel is not null)
-            _wheel = wheel.Value;
+        _wheel = wheel;
         IsClickMode = clickMode;
         Files = files;
         DonutOpacity = 1;
@@ -106,6 +110,19 @@ public sealed partial class RadialViewModel(UserDataStore store, ILocalizer loc,
 
         var profile = ProfileSelector.Select(store.Profiles, files);
         var formats = ProfileSelector.DetectFormats(files);
+        if (_wheel == WheelMode.Actions)
+        {
+            Presets = [];
+            _subPresets = [];
+            Items = OperatingSystem.IsMacOS()
+                ? [new DonutItem { Id = AirDropAction, Label = loc["actions.airdrop"], Caption = loc["actions.share"] }]
+                : [];
+            CenterTitle = formats.Count == 1
+                ? loc.Format("donut.files_same", files.Count, formats[0].DisplayName)
+                : loc.Format("donut.files_mixed", files.Count);
+            CenterSubtitle = clickMode ? loc["donut.close_hint"] : null;
+            return;
+        }
         var toolIds = BuiltInData.ToolPresetIds.ToHashSet();
         var presetIds = _wheel == WheelMode.Tools ? BuiltInData.ToolPresetIds : (profile?.PresetIds ?? []).Where(id => !toolIds.Contains(id));
         Presets = presetIds

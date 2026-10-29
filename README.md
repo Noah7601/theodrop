@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>A free, open-source file converter you use by dragging.</b><br>
-  Hold <kbd>Shift</kbd> on macOS and drag files to open the conversion wheel, or hold <kbd>Command</kbd> for file tools.
+  On macOS, drag with <kbd>Shift</kbd> for conversions, <kbd>Command</kbd> for tools, or <kbd>Command</kbd>+<kbd>Control</kbd> for AirDrop.
 </p>
 
 <p align="center">

@@ -444,6 +444,20 @@ public class DonutGroupTests
     }
 
     [AvaloniaFact]
+    public void Actions_wheel_offers_AirDrop_on_macos()
+    {
+        TestServices.EnsureInitialized("en");
+        var vm = AppHost.Get<RadialViewModel>();
+
+        vm.Load([@"C:\photos\a.jpg"], clickMode: true, WheelMode.Actions);
+
+        Assert.Equal(OperatingSystem.IsMacOS() ? [RadialViewModel.AirDropAction] : [], vm.Items.Select(i => i.Id));
+        if (OperatingSystem.IsMacOS())
+            Assert.Equal(RadialViewModel.AirDropAction, vm.ActionAt(0, -1));
+        Assert.Null(vm.PresetAt(0, -1));
+    }
+
+    [AvaloniaFact]
     public void A_group_left_without_presets_says_why_on_the_donut()
     {
         TestServices.EnsureInitialized("en");

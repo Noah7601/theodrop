@@ -132,6 +132,27 @@ internal static class NativeMethods
         SendVoid(window, sel_registerName("orderFrontRegardless"));
     }
 
+    internal static bool ShareFilesViaAirDrop(IReadOnlyList<string> files)
+    {
+        using var pool = new AutoreleasePool();
+        var items = Send(objc_getClass("NSMutableArray"), sel_registerName("arrayWithCapacity:"), files.Count);
+        foreach (var path in files.Where(path => File.Exists(path) || Directory.Exists(path)))
+        {
+            var value = SendString(objc_getClass("NSString"), sel_registerName("stringWithUTF8String:"), path);
+            var url = Send(objc_getClass("NSURL"), sel_registerName("fileURLWithPath:"), value);
+            SendVoid(items, sel_registerName("addObject:"), url);
+        }
+        if (Send(items, sel_registerName("count")) == 0)
+            return false;
+
+        var serviceName = Marshal.ReadIntPtr(NativeLibrary.GetExport(AppKit, "NSSharingServiceNameSendViaAirDrop"));
+        var service = Send(objc_getClass("NSSharingService"), sel_registerName("sharingServiceNamed:"), serviceName);
+        if (service == 0 || !SendBool(service, sel_registerName("canPerformWithItems:"), items))
+            return false;
+        SendVoid(service, sel_registerName("performWithItems:"), items);
+        return true;
+    }
+
     private readonly struct AutoreleasePool : IDisposable
     {
         private readonly nint _pool = Send(Send(objc_getClass("NSAutoreleasePool"), sel_registerName("alloc")), sel_registerName("init"));
@@ -219,11 +240,24 @@ internal static class NativeMethods
     private static extern nint Send(nint receiver, nint selector);
 
     [DllImport(ObjC, EntryPoint = "objc_msgSend")]
+    private static extern nint Send(nint receiver, nint selector, nint argument);
+
+    [DllImport(ObjC, EntryPoint = "objc_msgSend")]
+    private static extern nint SendString(nint receiver, nint selector, [MarshalAs(UnmanagedType.LPUTF8Str)] string argument);
+
+    [DllImport(ObjC, EntryPoint = "objc_msgSend")]
     [return: MarshalAs(UnmanagedType.I1)]
     private static extern bool SendBool(nint receiver, nint selector);
 
     [DllImport(ObjC, EntryPoint = "objc_msgSend")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    private static extern bool SendBool(nint receiver, nint selector, nint argument);
+
+    [DllImport(ObjC, EntryPoint = "objc_msgSend")]
     private static extern void SendVoid(nint receiver, nint selector);
+
+    [DllImport(ObjC, EntryPoint = "objc_msgSend")]
+    private static extern void SendVoid(nint receiver, nint selector, nint argument);
 
     [DllImport(ObjC, EntryPoint = "objc_msgSend")]
     private static extern void SendInteger(nint receiver, nint selector, nint value);

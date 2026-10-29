@@ -51,6 +51,7 @@ public enum WheelMode
 {
     Convert,
     Tools,
+    Actions,
 }
 
 /// <summary>A user-configurable gesture that opens the donut toolbar.</summary>
@@ -89,6 +90,10 @@ public sealed class TriggerGesture
         [
             new() { Kind = TriggerKind.Drag, Modifiers = convertModifier, Button = TriggerMouseButton.Left },
             new() { Kind = TriggerKind.Drag, Modifiers = toolsModifier, Button = TriggerMouseButton.Left, Wheel = WheelMode.Tools },
+            .. OperatingSystem.IsMacOS()
+                ? [new TriggerGesture { Kind = TriggerKind.Drag, Modifiers = ModifierKeys.Ctrl | ModifierKeys.Meta,
+                    Button = TriggerMouseButton.Left, Wheel = WheelMode.Actions }]
+                : Array.Empty<TriggerGesture>(),
             new() { Kind = TriggerKind.KeyChord, Modifiers = ModifierKeys.Ctrl | ModifierKeys.Alt, Button = TriggerMouseButton.None, Key = "Space" },
         ];
     }

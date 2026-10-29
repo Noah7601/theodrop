@@ -309,6 +309,20 @@ internal static class SettingsMigrations
             });
         }
 
+        // v19: AirDrop lives on its own actions wheel. It only exists on macOS; other platforms keep their current
+        // gestures until they have a native action to offer.
+        if (settings.SchemaVersion < 19 && OperatingSystem.IsMacOS() && settings.Triggers.Count > 0 &&
+            !settings.Triggers.Any(t => t.Wheel == WheelMode.Actions))
+        {
+            settings.Triggers.Add(new TriggerGesture
+            {
+                Kind = TriggerKind.Drag,
+                Modifiers = ModifierKeys.Ctrl | ModifierKeys.Meta,
+                Button = TriggerMouseButton.Left,
+                Wheel = WheelMode.Actions,
+            });
+        }
+
         settings.SchemaVersion = AppSettings.CurrentSchemaVersion;
     }
 

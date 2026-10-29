@@ -4,7 +4,7 @@
 
 <p align="center">
   <b>드래그로 쓰는 무료 오픈소스 파일 변환기.</b><br>
-  macOS에서 <kbd>Shift</kbd>를 누른 채 파일을 끌면 변환 휠이, <kbd>Command</kbd>를 누르면 도구 휠이 열려요.
+  macOS에서 <kbd>Shift</kbd> 드래그는 변환, <kbd>Command</kbd> 드래그는 도구, <kbd>Command</kbd>+<kbd>Control</kbd> 드래그는 AirDrop을 열어요.
 </p>
 
 <p align="center">

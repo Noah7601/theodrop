@@ -101,6 +101,8 @@ public sealed class MacOSPlatformServices : IPlatformServices
         Run("/usr/bin/open", File.Exists(fullPath) ? ["-R", fullPath] : [fullPath], 10_000);
     }
 
+    public bool ShareFilesViaAirDrop(IReadOnlyList<string> files) => NativeMethods.ShareFilesViaAirDrop(files);
+
     public void OpenAccessibilitySettings() =>
         Run("/usr/bin/open", ["x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"], 10_000);
 

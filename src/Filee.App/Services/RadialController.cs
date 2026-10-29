@@ -158,7 +158,7 @@ public sealed class RadialController(
         {
             if (viewModel.IsClickMode || SameFiles(files, viewModel.Files))
                 return;
-            viewModel.Load(files, clickMode: false);
+            viewModel.Load(files, clickMode: false, viewModel.Wheel);
             donut.PlayOpenAnimation();
         };
         window.Dropped += (hit, files) =>
@@ -201,6 +201,23 @@ public sealed class RadialController(
     /// <summary>Converts with slice <paramref name="index"/>, or with slice <paramref name="sub"/> of that group's ring.</summary>
     private void Convert(int index, int sub, IReadOnlyList<string> files)
     {
+        if (viewModel.ActionAt(index, sub) == RadialViewModel.AirDropAction && files.Count > 0)
+        {
+            var window = _window;
+            Close(animate: false);
+            try
+            {
+                if (!platform.ShareFilesViaAirDrop(files) && window is not null)
+                    _ = windows.MessageAsync(window, "AirDrop is unavailable for these files.");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or IOException)
+            {
+                log.LogWarning(ex, "Could not open AirDrop");
+                if (window is not null)
+                    _ = windows.MessageAsync(window, ex.Message);
+            }
+            return;
+        }
         if (viewModel.PresetAt(index, sub) is not { } preset || files.Count == 0)
         {
             Close();
@@ -301,7 +318,7 @@ public sealed class RadialController(
             if (await windows.EditPresetAsync(preset, _window))
             {
                 store.SaveLibrary();
-                viewModel.Load(viewModel.Files, viewModel.IsClickMode);
+                viewModel.Load(viewModel.Files, viewModel.IsClickMode, viewModel.Wheel);
             }
         }
         finally
