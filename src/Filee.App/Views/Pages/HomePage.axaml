@@ -26,12 +26,12 @@
     </Style>
   </UserControl.Styles>
 
-  <StackPanel Spacing="22">
+  <StackPanel Spacing="24">
     <TextBlock Classes="h1" Text="{DynamicResource home.title}" />
 
     <!-- macOS without Accessibility permission: the drag gesture can't work yet. Gone once it is given. -->
     <Border IsVisible="{Binding NeedsAccessibility}" Background="{DynamicResource AccentFaintBrush}"
-            BorderBrush="{DynamicResource AccentSoftBrush}" BorderThickness="1" CornerRadius="{DynamicResource SoftRadius}" Padding="14,10">
+            BorderBrush="{DynamicResource AccentSoftBrush}" BorderThickness="1" CornerRadius="{DynamicResource SoftRadius}" Padding="16,12">
       <DockPanel>
         <Button DockPanel.Dock="Right" VerticalAlignment="Center" Margin="12,0,0,0" Classes="accent"
                 Content="{DynamicResource triggers.open_accessibility}" Command="{Binding OpenAccessibilityCommand}" />
@@ -40,13 +40,14 @@
     </Border>
 
     <!-- Drop zone: files dropped here open the donut toolbar at the cursor. -->
-    <Border x:Name="DropZone" DragDrop.AllowDrop="True" MinHeight="220"
+    <Border x:Name="DropZone" DragDrop.AllowDrop="True" MinHeight="248"
             Background="{DynamicResource GlassSurfaceBrush}" BorderBrush="{DynamicResource GlassHighlightBrush}"
-            BorderThickness="1" CornerRadius="{DynamicResource SoftRadiusLarge}" Padding="24"
+            BorderThickness="1" CornerRadius="{DynamicResource SoftRadiusLarge}" Padding="32"
             BoxShadow="{DynamicResource CardShadow}">
-      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-        <Border Width="64" Height="64" CornerRadius="999" Background="{DynamicResource AccentSoftBrush}" HorizontalAlignment="Center">
-          <PathIcon Width="28" Height="28" Data="{StaticResource Icon.Upload}" Foreground="{DynamicResource AccentStrongBrush}" />
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+        <Border Width="72" Height="72" CornerRadius="999" Background="{DynamicResource AccentSoftBrush}"
+                HorizontalAlignment="Center" Margin="0,0,0,4">
+          <PathIcon Width="30" Height="30" Data="{StaticResource Icon.Upload}" Foreground="{DynamicResource AccentStrongBrush}" />
         </Border>
         <TextBlock Classes="h2" HorizontalAlignment="Center" Text="{DynamicResource home.drop_title}" />
         <TextBlock Classes="muted" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="460"
@@ -55,22 +56,24 @@
     </Border>
 
     <!-- Recent conversions -->
-    <StackPanel Spacing="10">
+    <StackPanel Spacing="12">
       <DockPanel>
         <Button DockPanel.Dock="Right" Classes="ghost" Content="{DynamicResource home.clear_history}" Command="{Binding ClearHistoryCommand}" />
         <TextBlock Classes="h2" VerticalAlignment="Center" Text="{DynamicResource home.recent}" />
       </DockPanel>
-      <TextBlock Classes="muted" Text="{DynamicResource home.recent_empty}" IsVisible="{Binding IsEmpty}" />
+      <Border Classes="card" IsVisible="{Binding IsEmpty}" Padding="16,14">
+        <TextBlock Classes="muted" Text="{DynamicResource home.recent_empty}" />
+      </Border>
       <ItemsControl ItemsSource="{Binding History}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <StackPanel Spacing="8" />
+            <StackPanel Spacing="12" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate x:DataType="vm:HistoryItemViewModel">
-            <Border Classes="card" Padding="14,10">
-              <StackPanel Spacing="8">
+            <Border Classes="card" Padding="16,12">
+              <StackPanel Spacing="12">
                 <DockPanel>
                   <Button DockPanel.Dock="Right" Command="{Binding OpenFolderCommand}" IsVisible="{Binding HasOutputs}" Padding="10,5">
                     <StackPanel Orientation="Horizontal" Spacing="6">
@@ -78,7 +81,7 @@
                       <TextBlock Text="{DynamicResource home.open_folder}" />
                     </StackPanel>
                   </Button>
-                  <Border DockPanel.Dock="Left" Width="32" Height="32" CornerRadius="999" Margin="0,0,12,0"
+                  <Border DockPanel.Dock="Left" Width="36" Height="36" CornerRadius="999" Margin="0,0,12,0"
                           Background="{DynamicResource AccentSoftBrush}">
                     <Panel>
                       <PathIcon Width="15" Height="15" Data="{StaticResource Icon.Check}" Foreground="{DynamicResource AccentStrongBrush}" IsVisible="{Binding !HasErrors}" />

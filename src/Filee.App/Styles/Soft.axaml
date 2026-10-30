@@ -11,36 +11,36 @@
     <ResourceDictionary>
       <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-          <SolidColorBrush x:Key="PageBrush" Color="#CFEAF4FF" />
-          <SolidColorBrush x:Key="WindowGlassBrush" Color="#C7F7FAFF" />
-          <SolidColorBrush x:Key="GlassSurfaceBrush" Color="#9EFFFFFF" />
-          <SolidColorBrush x:Key="GlassSurfaceStrongBrush" Color="#D9FFFFFF" />
-          <SolidColorBrush x:Key="GlassHighlightBrush" Color="#CFFFFFFF" />
-          <SolidColorBrush x:Key="SurfaceBrush" Color="#D9FFFFFF" />
-          <SolidColorBrush x:Key="SurfaceAltBrush" Color="#7AFFFFFF" />
-          <SolidColorBrush x:Key="SubtleBorderBrush" Color="#38FFFFFF" />
-          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E91C1C1E" />
-          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#A864646A" />
+          <SolidColorBrush x:Key="PageBrush" Color="#E6F1F4F8" />
+          <SolidColorBrush x:Key="WindowGlassBrush" Color="#EDF8FAFC" />
+          <SolidColorBrush x:Key="GlassSurfaceBrush" Color="#A6FFFFFF" />
+          <SolidColorBrush x:Key="GlassSurfaceStrongBrush" Color="#E8FFFFFF" />
+          <SolidColorBrush x:Key="GlassHighlightBrush" Color="#F2FFFFFF" />
+          <SolidColorBrush x:Key="SurfaceBrush" Color="#E6FFFFFF" />
+          <SolidColorBrush x:Key="SurfaceAltBrush" Color="#8FFFFFFF" />
+          <SolidColorBrush x:Key="SubtleBorderBrush" Color="#52778396" />
+          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F01B2028" />
+          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#A8525B6A" />
           <SolidColorBrush x:Key="DangerBrush" Color="#FF3B30" />
           <SolidColorBrush x:Key="SuccessBrush" Color="#248A3D" />
           <SolidColorBrush x:Key="WarningBrush" Color="#C93400" />
-          <BoxShadows x:Key="CardShadow">0 1 1 0 #1AFFFFFF, 0 12 32 0 #1A315B7A</BoxShadows>
+          <BoxShadows x:Key="CardShadow">0 1 2 0 #12FFFFFF, 0 10 28 0 #18334A62</BoxShadows>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
-          <SolidColorBrush x:Key="PageBrush" Color="#D60A0D16" />
-          <SolidColorBrush x:Key="WindowGlassBrush" Color="#C4141824" />
-          <SolidColorBrush x:Key="GlassSurfaceBrush" Color="#522D3446" />
-          <SolidColorBrush x:Key="GlassSurfaceStrongBrush" Color="#C12A3040" />
-          <SolidColorBrush x:Key="GlassHighlightBrush" Color="#32FFFFFF" />
-          <SolidColorBrush x:Key="SurfaceBrush" Color="#C12A3040" />
-          <SolidColorBrush x:Key="SurfaceAltBrush" Color="#633B4357" />
-          <SolidColorBrush x:Key="SubtleBorderBrush" Color="#30FFFFFF" />
-          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2F2F7" />
-          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#AEB3C0" />
+          <SolidColorBrush x:Key="PageBrush" Color="#EB090B11" />
+          <SolidColorBrush x:Key="WindowGlassBrush" Color="#E612151D" />
+          <SolidColorBrush x:Key="GlassSurfaceBrush" Color="#66272C38" />
+          <SolidColorBrush x:Key="GlassSurfaceStrongBrush" Color="#D3262B36" />
+          <SolidColorBrush x:Key="GlassHighlightBrush" Color="#28FFFFFF" />
+          <SolidColorBrush x:Key="SurfaceBrush" Color="#D12A303C" />
+          <SolidColorBrush x:Key="SurfaceAltBrush" Color="#71363D4B" />
+          <SolidColorBrush x:Key="SubtleBorderBrush" Color="#2EFFFFFF" />
+          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F5F7F8FA" />
+          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#A7AEB8C7" />
           <SolidColorBrush x:Key="DangerBrush" Color="#FF6961" />
           <SolidColorBrush x:Key="SuccessBrush" Color="#30D158" />
           <SolidColorBrush x:Key="WarningBrush" Color="#FF9F0A" />
-          <BoxShadows x:Key="CardShadow">0 1 1 0 #18FFFFFF, 0 14 38 0 #66000000</BoxShadows>
+          <BoxShadows x:Key="CardShadow">0 1 1 0 #14FFFFFF, 0 12 32 0 #52000000</BoxShadows>
         </ResourceDictionary>
       </ResourceDictionary.ThemeDictionaries>
 
@@ -69,11 +69,11 @@
   </Style>
 
   <Style Selector="TextBlock.h1">
-    <Setter Property="FontSize" Value="24" />
+    <Setter Property="FontSize" Value="28" />
     <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
   <Style Selector="TextBlock.h2">
-    <Setter Property="FontSize" Value="16" />
+    <Setter Property="FontSize" Value="17" />
     <Setter Property="FontWeight" Value="SemiBold" />
   </Style>
   <Style Selector="TextBlock.muted">
@@ -98,7 +98,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource SubtleBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="CornerRadius" Value="{DynamicResource SoftRadius}" />
-    <Setter Property="Padding" Value="18,16" />
+    <Setter Property="Padding" Value="16" />
     <Setter Property="BoxShadow" Value="{DynamicResource CardShadow}" />
   </Style>
 
@@ -136,12 +136,14 @@
   <!-- ───────── Buttons: soft corners and a springy press ───────── -->
   <Style Selector="Button, ToggleButton, RepeatButton">
     <Setter Property="CornerRadius" Value="{DynamicResource SoftRadiusSmall}" />
-    <Setter Property="Padding" Value="14,7" />
+    <Setter Property="Padding" Value="14,8" />
     <Setter Property="BorderBrush" Value="{DynamicResource SubtleBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Transitions">
       <Transitions>
         <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.22" Easing="{StaticResource SoftEase}" />
+        <BrushTransition Property="Background" Duration="0:0:0.14" />
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.14" />
       </Transitions>
     </Setter>
   </Style>
@@ -154,7 +156,7 @@
   </Style>
   <!-- Small links at the bottom of the navigation (GitHub, Sponsor) -->
   <Style Selector="Button.navlink">
-    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="Padding" Value="8" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="Background" Value="{DynamicResource GlassSurfaceBrush}" />
     <Setter Property="BorderThickness" Value="1" />
@@ -182,8 +184,8 @@
   </Style>
   <Style Selector="ListBox.nav ListBoxItem">
     <Setter Property="CornerRadius" Value="{DynamicResource SoftRadiusSmall}" />
-    <Setter Property="Padding" Value="12,9" />
-    <Setter Property="Margin" Value="0,1" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="Margin" Value="0,2" />
     <Setter Property="RenderTransform" Value="none" />
     <Setter Property="Transitions">
       <Transitions>
@@ -245,10 +247,10 @@
   </Style>
 
   <!-- ───────── Reduced motion: remove every transition and animation above ───────── -->
-  <Style Selector="Window.reduced-motion :is(Button), Window.reduced-motion :is(ToggleButton), Window.reduced-motion Border.chip, Window.reduced-motion ListBoxItem">
+  <Style Selector="Window.reduced-motion :is(Button), Window.reduced-motion :is(ToggleButton), Window.reduced-motion Border.chip, Window.reduced-motion Border#DropZone, Window.reduced-motion ListBoxItem">
     <Setter Property="Transitions" Value="{x:Null}" />
   </Style>
-  <Style Selector="Window.reduced-motion Button:pressed, Window.reduced-motion ToggleButton:pressed, Window.reduced-motion Border.chip:pointerover, Window.reduced-motion ListBox.nav ListBoxItem:pointerover">
+  <Style Selector="Window.reduced-motion Button:pressed, Window.reduced-motion ToggleButton:pressed, Window.reduced-motion Border.chip:pointerover, Window.reduced-motion Border#DropZone.over, Window.reduced-motion ListBox.nav ListBoxItem:pointerover">
     <Setter Property="RenderTransform" Value="none" />
   </Style>
   <Style Selector="Window.reduced-motion ContentControl.page > :is(Control)">
